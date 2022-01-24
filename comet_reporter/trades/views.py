@@ -25,10 +25,13 @@ def tradeView(request):
                     pending_trades["status"] = "pending"
                     trades["status"] = "complete"
                     final = pd.concat([trades,pending_trades])
-                    final["date"] = pd.to_datetime(final["date"])
-                    final.sort_values("date",inplace=True)
-                    final["date"] = [str(x).split(".")[0] for x in final["date"]]
-                    complete = final[["date","product_id","status","sell_price","size","price"]].round(decimals=4).iloc[::-1].head(10).to_dict("records")
+                    if final.index.size > 0:
+                        final["date"] = pd.to_datetime(final["date"])
+                        final.sort_values("date",inplace=True)
+                        final["date"] = [str(x).split(".")[0] for x in final["date"]]
+                        complete = final[["date","product_id","status","sell_price","size","price"]].round(decimals=4).iloc[::-1].head(10).to_dict("records")
+                    else:
+                        complete = []
             else:
                 complete = {"error":"incorrect_key"}
         elif request.method == "DELETE":

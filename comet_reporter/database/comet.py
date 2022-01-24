@@ -11,7 +11,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_fills"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -20,7 +20,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_completed_buys"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -29,7 +29,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_pending_trades"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -38,7 +38,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_completed_trades"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -47,7 +47,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_completed_sells"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -56,7 +56,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_pending_sells"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
@@ -65,7 +65,7 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_pending_buys"]
-            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))

@@ -22,11 +22,14 @@ def iterationView(request):
             if header_key == reporter_key:
                 final = comet.retrieve_iterations(username).round(decimals=2)
                 comet.disconnect()
-                final["date"] = pd.to_datetime(final["date"])
-                final.sort_values("date",inplace=True)
-                final["value"] = [str(x) for x in final["value"]] 
-                final["conservative"] = [str(x) for x in final["conservative"]]  
-                complete = final[[x for x in final.columns if x not in ["fee","minimum_rows","live"]]].iloc[::-1].head(10).to_dict("records")
+                if final.index.size > 0:
+                    final["date"] = pd.to_datetime(final["date"])
+                    final.sort_values("date",inplace=True)
+                    final["value"] = [str(x) for x in final["value"]] 
+                    final["conservative"] = [str(x) for x in final["conservative"]]  
+                    complete = final[[x for x in final.columns if x not in ["fee","minimum_rows","live"]]].iloc[::-1].head(10).to_dict("records")
+                else:
+                    complete = []
             else:
                 complete = {"error":"incorrect_key"}
         elif request.method == "DELETE":

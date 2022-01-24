@@ -21,7 +21,10 @@ def errorView(request):
             reporter_key = comet.retrieve("reporter_key").iloc[0]["key"]
             if header_key == reporter_key:
                 final = comet.retrieve_errors(username).round(decimals=2)
-                complete = final[["date","status","message"]].iloc[::-1].head(10).to_dict("records")
+                if final.index.size > 0:
+                    complete = final[["date","status","message"]].iloc[::-1].head(10).to_dict("records")
+                else:
+                    complete = []
             else:
                 complete = {"error":"incorrect_key"}
         elif request.method == "DELETE":

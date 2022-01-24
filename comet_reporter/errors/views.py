@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Create your views here.
 @csrf_exempt
-def historicalView(request):
+def errorView(request):
     try:
         header_key = request.headers["x-api-key"]
         if request.method == "GET":
@@ -20,13 +20,8 @@ def historicalView(request):
             comet.cloud_connect()
             reporter_key = comet.retrieve("reporter_key").iloc[0]["key"]
             if header_key == reporter_key:
-                final = comet.retrieve_historicals(username).round(decimals=2)[["time","crypto","signal","velocity","inflection","p_sign_change","price","bid","ask"]]
-                comet.disconnect()
-                final["time"] = pd.to_datetime(final["time"])
-                final.sort_values("time",inplace=True)
-                final["time"] = [str(x).split(".")[0] for x in final["time"]]
-                final["p_sign_change"] = [str(x) for x in final["p_sign_change"]]
-                complete = final.iloc[::-1].head(10).to_dict("records")
+                final = comet.retrieve_errors(username).round(decimals=2)
+                complete = final[["date","status","message"]].iloc[::-1].head(10).to_dict("records")
             else:
                 complete = {"error":"incorrect_key"}
         elif request.method == "DELETE":

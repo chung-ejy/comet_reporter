@@ -51,7 +51,25 @@ class Comet(ADatabase):
             return pd.DataFrame(list(data))
         except Exception as e:
             print(self.name,"fills",str(e))
-            
+    
+    def retrieve_pending_sells(self,user):
+        try:
+            db = self.client[self.name]
+            table = db[f"cloud_{self.prefix}_pending_sells"]
+            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            return pd.DataFrame(list(data))
+        except Exception as e:
+            print(self.name,"fills",str(e))
+    
+    def retrieve_pending_buys(self,user):
+        try:
+            db = self.client[self.name]
+            table = db[f"cloud_{self.prefix}_pending_buys"]
+            data = table.find({"username":user},{"order_id":1,"_id":0},show_record_id=False)
+            return pd.DataFrame(list(data))
+        except Exception as e:
+            print(self.name,"fills",str(e))
+
     def retrieve_historicals(self,user):
         try:
             db = self.client[self.name]
@@ -65,6 +83,15 @@ class Comet(ADatabase):
         try:
             db = self.client[self.name]
             table = db[f"cloud_{self.prefix}_iterations"]
+            data = table.find({"username":user},{"_id":0},show_record_id=False)
+            return pd.DataFrame(list(data))
+        except Exception as e:
+            print(self.name,"fills",str(e))
+    
+    def retrieve_errors(self,user):
+        try:
+            db = self.client[self.name]
+            table = db[f"cloud_{self.prefix}_errors"]
             data = table.find({"username":user},{"_id":0},show_record_id=False)
             return pd.DataFrame(list(data))
         except Exception as e:

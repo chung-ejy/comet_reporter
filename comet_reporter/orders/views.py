@@ -33,7 +33,6 @@ def orderView(request):
                 buys["status"] = "complete"
                 sells["status"] = "complete"
                 final = pd.concat([buys,sells,pending_buys,pending_sells])
-                print(final)
                 if final.index.size > 0:
                     final = final.groupby(["product_id","order_id","status","side"]).agg({"created_at":"first","price": "mean", "size": "sum"}).reset_index()
                     final["created_at"] = pd.to_datetime(final["created_at"])
